@@ -4,7 +4,7 @@
 
 ## Installation
 
-    $ npm install metalsmith-assets
+    $ npm install metalsmith-assets-ex
 
 ## CLI Usage
 
