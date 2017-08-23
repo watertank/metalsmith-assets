@@ -16,6 +16,7 @@ module.exports = assets;
  * Default plugin options
  */
 var defaults = {
+  ignores: [],
   source: './public',
   destination: '.'
 };
@@ -40,7 +41,7 @@ function assets(options) {
 
 
     // copied almost line for line from https://github.com/segmentio/metalsmith/blob/master/lib/index.js
-    readdir(src, function (err, arr) {
+    readdir(src, options.ignores, function (err, arr) {
       if (err) return done(err);
 
       debug(arr.length+' files found.');
@@ -57,12 +58,13 @@ function assets(options) {
         if (err) return done(err);
         fs.readFile(file, function (err, buffer) {
           if (err) return done(err);
-          var file = {};
+          var data = {};
 
-          file.contents = buffer;
+          data.contents = buffer;
 
-          file.mode = Mode(stats).toOctal();
-          files[name] = file;
+          data.mode = Mode(stats).toOctal();
+          data.stats = stats;
+          files[name] = data;
           done();
         });
       });
